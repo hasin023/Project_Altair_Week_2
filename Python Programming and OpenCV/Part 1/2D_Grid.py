@@ -9,48 +9,60 @@ def process_instructions(instructions, grid_size):
         'N': (0, 1),
         # East means moving right 1 step in the x-axis, so we add 1 to x and keep y the same
         'E': (1, 0),
-        # South means the opposite of North, so we subtract 1 from y
+        # Opposite of North
         'S': (0, -1),
-        # West means the opposite of East, so we subtract 1 from x
+        # Opposite of East
         'W': (-1, 0)
     }
 
-    # The rover's initial position is assumed to be at coordinates (0, 0), Facing North.
+    # The rover's initial position is assumed to be at coordinates (0, 0) Facing North.
     x, y = 0, 0
     direction = 'N'
 
-    # Helper function to turn the rover
-    def turn_rover(current_direction, turn_direction):
-        # TODO - Turn to Rover
+    turns = {'N': 0, 'E': 1, 'S': 2, 'W': 3}
 
+    def Turn(direction, turnDirection):
+        # Taking the value of the current direction from the turns dictionary
+        directionValue = turns[direction]
 
+        # If the turn direction is 'L', subtract 1 from the direction value
+        # If the turn direction is 'R', add 1 to the direction value
+        turnOperations = {'L': -1, 'R': 1}
+
+        # When the direction value is greater than 3, we need to reset it to 0
+        # So we take the module value of 4 % 4 = 0, And the direction value is reset to 0
+        newDirectionValue = (directionValue +
+                             turnOperations[turnDirection]) % 4
+
+        newDirection = next(
+            key for key, value in turns.items() if value == newDirectionValue)
+
+        return newDirection
 
     for i in instructions:
         if i == 'F':
             # From the Directions dictionary & the current directtion, we get (x, y) from [0] & [1] respectively
-            move_in_x = directions[direction][0]
-            move_in_y = directions[direction][1]
+            moveX = directions[direction][0]
+            moveY = directions[direction][1]
 
             # We add the move_in_x & move_in_y to the current x & y coordinates
-            current_x = x + move_in_x
-            current_y = y + move_in_y
+            newX = x + moveX
+            newY = y + moveY
 
+            # If the new x is greater than 0 and less than rows, it's valid as x moves in rows
+            # If the new y is greater than 0 and less than columns, it's valid as y moves in columns
+            if 0 <= newX < rows and 0 <= newY < columns:
+                x = newX
+                y = newY
 
-            # If the current x is greater than 0 and less than rows, it's valid as x moves in rows
-            # If the current y is greater than 0 and less than columns, it's valid as y moves in columns
-            if 0 <= current_x < rows and 0 <= current_y < columns:
-                x= current_x
-                y = current_y
-
-        elif i in {'L', 'R'}:
-            #TODO - Turn the rover
+        elif i == 'L' or i == 'R':
+            direction = Turn(direction, i)
 
     return x, y, direction
 
 
 instructions = "FFLFFRFL"
 grid_size = (5, 5)
-final_position = process_instructions(instructions, grid_size)
-print(final_position)
+print(process_instructions(instructions, grid_size))
 
 # Example Output: (0, 3, 'W')
