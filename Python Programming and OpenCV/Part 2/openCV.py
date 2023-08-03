@@ -6,7 +6,7 @@ img = cv2.imread('img/GOAT.jpg', -1)
 smallImg = cv2.resize(img, (0, 0), fx=0.8, fy=0.8)
 cv2.imshow("Original-Small", smallImg)
 
-
+# TODO NEED TO MAKE THIS A SEPARATE DETECT_COLOR METHOD
 hsvImg = cv2.cvtColor(smallImg, cv2.COLOR_BGR2HSV)
 
 
@@ -31,6 +31,7 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 
+# TODO NEED TO MAKE THIS A SEPARATE ANALYZE_GOAT METHOD
 # Print Minimum and maximum pixel values in the image
 max_value = np.max(img)
 min_value = np.min(img)
