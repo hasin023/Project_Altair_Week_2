@@ -61,8 +61,10 @@ def process_instructions(instructions, grid_size):
     return x, y, direction
 
 
-instructions = "FFLFFRFL"
-grid_size = (5, 5)
-print(process_instructions(instructions, grid_size))
+if __name__ == "__main__":
 
-# Example Output: (0, 3, 'W')
+    instructions = "FFLFFRFL"
+    grid_size = (5, 5)
+    print(process_instructions(instructions, grid_size))
+
+    # Example Output: (0, 3, 'W')
